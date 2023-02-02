@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  gateway-docker-compose:
+    image: mhbappy18/gateway
+    container_name: gateway
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./application:/tmp/springboot-docker-compose-app
+    networks:
+      - backend
+

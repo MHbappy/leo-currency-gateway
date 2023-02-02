@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: gateway
+  ##GATEWAY CONFIGURATIONS
+  cloud:
+    gateway:
+      routes:
+        ## Reservation
+        - id: app-version
+          uri: lb://app-version
+          predicates:
+            - Path=/app-version/**
+          filters:
+            - StripPrefix=1
+        ## rating
+        - id: currency-configure
+          uri: lb://currency-configure
+          predicates:
+            - Path=/currency-configure/**
+          filters:
+            - StripPrefix=1
+        ## rastaurant-bar
+        - id: currency-convert
+          uri: lb://currency-convert
+          predicates:
+            - Path=/currency-convert/**
+          filters:
+            - StripPrefix=1
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: '*'
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+            allowed-headers: '*'
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+server:
+  port: 8090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://app-network:8761/eureka
+
